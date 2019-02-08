@@ -5,14 +5,19 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class HPOExplorer
 {
-	private static Term[] terms = new Term[13941];
-	private static Query[] queries = new Query[5];
-	private static Map<String, Term> termDicUp = new HashMap<>();
+//	private static Term[] terms = new Term[13941];
+//	private static Query[] queries = new Query[5];
+	
+	private static ArrayList<Term> terms = new ArrayList<>();
+	private static ArrayList<Query> queries = new ArrayList<>();
+	
+	private static Map<String, Term> termDic = new HashMap<>();
 	
 	public static void readInHPO()
 	{
@@ -50,17 +55,16 @@ public class HPOExplorer
 					{	
 						if (!hasId)
 						{					
-							addTerm.setIds(line);
+							addTerm.setId(line);
 							hasId = true;
-							
 						}
 						else if (line.contains("is_a:"))
 							addTerm.addNewAltId(line);
 						else if (line.contains("is_obsolete: true"))
 							valid = false;
-						else
-							if (!(line.equals("[Term]")) && line != null)
-								content += (content == "") ? line : "\n" + line;
+						
+						if (!(line.equals("[Term]")) && line != null)
+							content += (content == "") ? line : "\n" + line;
 					}
 					
 					if (line == null || line.equals("[Term]"))
@@ -69,25 +73,51 @@ public class HPOExplorer
 						{
 							//Sets content for term and add dictionary reference
 							addTerm.setContent(content);
-							terms[i] = addTerm;
+							terms.add(addTerm);
 
-							termDicUp.put(terms[i].getId(), terms[i]);
+							termDic.put(terms.get(i).getId(), terms.get(i));
+						}
+						else
+						{
+							terms.add(new Term());
 						}
 						
 						isDone = true;
 					}
-				}	
+				}
 				
 				i++;
 			}
 			
 			br.close();
+			buildPointers();
 		}
 		catch (IOException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
+	}
+	
+	public static void buildPointers()
+	{
+		for (Term term : terms)
+		{
+			ArrayList<Term> parents = new ArrayList<>();
+			
+			if (term != null)
+			{
+				for (String altId : term.getAltIds())
+				{
+					parents.add(termDic.get(altId));
+				}
+				
+				for (Term parent : parents)
+				{
+					term.addParent(parent);
+				}
+			}
+		}
 	}
 	
 	public static void readInQuerries()
@@ -101,12 +131,10 @@ public class HPOExplorer
 			br = new BufferedReader(new FileReader(queriesFile));
 			
 			String line = "";
-			int i = 0;
 			
 			while ((line = br.readLine()) != null)
 			{
-				queries[i] = new Query(line);
-				i++;
+				queries.add(new Query(line));
 			}
 			
 			br.close();
@@ -118,22 +146,51 @@ public class HPOExplorer
 		}
 	}
 	
-	public static void writeQuerries()
+	public static void solveMaxPath()
+	{	
+		writeToFile("maxpath.txt", getMaxQuery(findMaxPath()));
+	}
+	
+	public static ArrayList<Term> findMaxPath()
+	{
+		ArrayList<Term> maxPath = new ArrayList<>();
+		
+		for (Term term : terms)
+		{		
+			ArrayList<Term> currPath = maxPathToRoot(term);
+			
+			if (currPath.size() > maxPath.size())
+				maxPath = currPath;
+		}
+		
+		return maxPath;
+	}
+	
+	public static ArrayList<Term> maxPathToRoot(Term current)
+	{
+		ArrayList<Term> maxPathToRoot = new ArrayList<>();
+		
+		for (Term parent : current.getParents())
+		{
+			ArrayList<Term> currPath = maxPathToRoot(parent);
+			
+			if (currPath.size() > maxPathToRoot.size())		
+				maxPathToRoot = currPath;
+		}
+		
+		maxPathToRoot.add(0, current);		
+		return maxPathToRoot;
+	}
+	
+	public static void writeToFile(String fileName, String content)
 	{
 		try
 		{
-			FileOutputStream outFile = new FileOutputStream("results.txt");
+			FileOutputStream outFile = new FileOutputStream(fileName);
 			OutputStreamWriter outStream = new OutputStreamWriter(outFile, "utf-8");
 			BufferedWriter writer = new BufferedWriter(outStream);
 			
-			for (int i = 0; i < queries.length; i++)
-			{
-				writer.write((queries[i].getFullQuery(termDicUp)));
-//				else
-//					writer.write(queries[i].getFullQuery(termDicUp));
-				
-			}
-			
+			writer.write(content);		
 			writer.close();
 		}
 		catch (IOException e) 
@@ -142,10 +199,39 @@ public class HPOExplorer
 		}
 	}
 	
+	public static void solveQueries()
+	{
+		String solvedOutput = "";
+		
+		for (int i = 0; i < queries.size(); i++)
+		{
+			solvedOutput += queries.get(i).getFullQuery(termDic);
+		}
+		
+		writeToFile("results.txt", solvedOutput);
+	}
+	
+	
+	//Write to maxPath file here
+	public static String getMaxQuery(ArrayList<Term> longest)
+	{
+		String returnQuery = "[max_path=" + longest.size() + "]";
+
+		for (Term term : longest)
+		{
+			returnQuery += "\n[Term]\n" + term.getContent();
+		}
+		
+		return returnQuery + "\n";
+	}
+	
 	public static void main(String[] args)
 	{
 		readInHPO();
 		readInQuerries();
-		writeQuerries();
+		solveQueries();
+		solveMaxPath();
+		
+		//TO DO: CLEAN UP CODE, COMBINE WRITE TO FUNCTION AND READ FUNCTIONS TO SIMPLIFY CODE, MAKE LESS CODE IN MAIN (Put some of the formatting and stuff in TERM)
 	}
 }

@@ -1,18 +1,23 @@
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class Term
 {
 	String fullId = "", id = "";
 	
-	String[] fullAlts = null, altIds = null;
+	ArrayList<String>  fullAlts = new ArrayList<>(); 
+	ArrayList<String> altIds = new ArrayList<>();
 	
 	String content = "";
+	
+	//ADD POINTERS AS ARRAY FOR PARENTS AND CHILDREN!
+	ArrayList<Term> parents = new ArrayList<>();
 	
 	public Term()
 	{
 	}
 	
-	public void setIds(String fullId)
+	public void setId(String fullId)
 	{
 		this.fullId = fullId;
 		
@@ -26,27 +31,8 @@ public class Term
 	
 	public void addNewAltId(String addFullAltId)
 	{
-		if (fullAlts == null)
-		{
-			fullAlts = new String[0];
-			altIds = new String[0];
-		}
-		
-		int originalSize = altIds.length;
-		
-		String[] newFullAlts = new String[originalSize + 1];
-		String[] newAltIds = new String[originalSize + 1];
-		
-		String addedAltId = getOnlyId(addFullAltId);
-		
-		for (int i = 0; i < newAltIds.length; i++)
-		{
-			newFullAlts[i] = i < originalSize ? fullAlts[i] : addFullAltId;
-			newAltIds[i] = i < originalSize ? altIds[i] : addedAltId;
-		}
-			
-		fullAlts = newFullAlts;
-		altIds = newAltIds;
+		fullAlts.add(addFullAltId);
+		altIds.add(getOnlyId(addFullAltId));
 	}
 	
 	public String getOnlyId(String fullAltId)
@@ -65,23 +51,21 @@ public class Term
 	{
 		String fullTerm = fullId + "\n" + content;
 		
-		if (fullAlts != null)
-		{
-			for (int i = 0; i < fullAlts.length; i++)
-				fullTerm += (i == 0) ? fullAlts[i] : "\n" + fullAlts[i];
-		}	
+		if (fullAlts.isEmpty() == false)
+			for (int i = 0; i < fullAlts.size(); i++)
+				fullTerm += (i == 0) ? fullAlts.get(i) : "\n" + fullAlts.get(i);
 		
 		return fullTerm + "\n";
+	}
+	
+	public void addParent(Term parent)
+	{
+		parents.add(parent);
 	}
 	
 	public void setContent(String content)
 	{
 		this.content = content;
-	}
-
-	public String getFullId()
-	{
-		return fullId;
 	}
 
 	public String getId()
@@ -94,29 +78,13 @@ public class Term
 		return content;
 	}
 
-	public String[] getFullAlts()
-	{
-		return fullAlts;
-	}
-
-	public String[] getAltIds()
+	public ArrayList<String> getAltIds()
 	{
 		return altIds;
 	}
 	
-	public String getFirstAlt()
+	public ArrayList<Term> getParents()
 	{
-		if (altIds == null)
-			return null;
-		else
-			return altIds[0];
+		return parents;
 	}
-	
-//	public void printAltIds()
-//	{
-//		for (String string : altIds)
-//		{
-//			System.out.println(string);
-//		}
-//	}
 }

@@ -1,0 +1,183 @@
+[max_path=16]
+[Term]
+id: HP:0009950
+name: Complete duplication of the distal phalanx of the 2nd finger
+def: "Complete duplication of the distal phalanx of index finger." [HPO:probinson]
+synonym: "Complete duplication of the outermost bone of the index finger" EXACT layperson [ORCID:0000-0001-5208-3432]
+xref: UMLS:C4024151
+is_a: HP:0009948 ! Duplication of the distal phalanx of the 2nd finger
+is_a: HP:0009957 ! Complete duplication of the phalanges of the 2nd finger
+is_a: HP:0010001 ! Complete duplication of the distal phalanges of the hand
+created_by: doelkens
+creation_date: 2009-05-15T02:03:28Z
+
+[Term]
+id: HP:0009948
+name: Duplication of the distal phalanx of the 2nd finger
+alt_id: HP:0004144
+def: "Partial or complete duplication of the distal phalanx of index finger." [HPO:probinson]
+synonym: "Partial/complete duplication of the distal phalanx of the 2nd finger" EXACT []
+synonym: "Partial/complete duplication of the outermost bone of the index finger" EXACT layperson [ORCID:0000-0001-5208-3432]
+xref: UMLS:C4021367
+is_a: HP:0009542 ! Abnormality of the distal phalanx of the 2nd finger
+is_a: HP:0009883 ! Duplication of the distal phalanx of hand
+is_a: HP:0009945 ! Duplication of phalanx of 2nd finger
+created_by: doelkens
+creation_date: 2009-05-15T01:58:58Z
+
+[Term]
+id: HP:0009945
+name: Duplication of phalanx of 2nd finger
+def: "This term applies if one or more of the phalanges of the 2nd finger are either partially duplicated, depending on severity leading to a broad or bifid appearance of the phalanges, or completely duplicated." [HPO:curators]
+synonym: "Duplication of the bones of index finger" EXACT layperson [ORCID:0000-0001-5208-3432]
+synonym: "Partial/complete duplication of phalanges of the 2nd finger" EXACT []
+xref: UMLS:C4021369
+is_a: HP:0009541 ! Abnormality of the phalanges of the 2nd finger
+is_a: HP:0009946 ! Polydactyly affecting the 2nd finger
+created_by: doelkens
+creation_date: 2009-05-15T01:00:37Z
+
+[Term]
+id: HP:0009946
+name: Polydactyly affecting the 2nd finger
+synonym: "Extra index finger" EXACT layperson [ORCID:0000-0001-5208-3432]
+xref: UMLS:C4024152
+is_a: HP:0004100 ! Abnormality of the 2nd finger
+is_a: HP:0006159 ! Mesoaxial hand polydactyly
+created_by: doelkens
+creation_date: 2009-05-15T01:01:48Z
+
+[Term]
+id: HP:0006159
+name: Mesoaxial hand polydactyly
+alt_id: HP:0001496
+alt_id: HP:0004056
+def: "The presence of a supernumerary finger (not a thumb) involving the third or fourth metacarpal with associated osseous syndactyly." [HPO:probinson]
+subset: hposlim_core
+synonym: "Central hand polydactyly" RELATED []
+synonym: "Interdigital finger polydactyly" EXACT []
+xref: UMLS:C4021606
+is_a: HP:0001161 ! Hand polydactyly
+is_a: HP:0100260 ! Mesoaxial polydactyly
+
+[Term]
+id: HP:0001161
+name: Hand polydactyly
+def: "A kind of polydactyly characterized by the presence of a supernumerary finger or fingers." [HPO:probinson]
+subset: hposlim_core
+synonym: "Extra finger" EXACT layperson [ORCID:0000-0001-6908-9849]
+synonym: "Finger polydactyly" EXACT []
+synonym: "Polydactyly of the hand" EXACT []
+synonym: "Supernumerary finger" EXACT [ORCID:0000-0001-6908-9849]
+xref: MEDDRA:10036064 "Polydactyly of fingers"
+xref: SNOMEDCT_US:81793007
+xref: UMLS:C0158733
+is_a: HP:0009997 ! Duplication of phalanx of hand
+is_a: HP:0010442 ! Polydactyly
+
+[Term]
+id: HP:0009997
+name: Duplication of phalanx of hand
+alt_id: HP:0009143
+def: "This term applies if one or more of the phalanges of the hand are either partially duplicated, depending on severity leading to a broad or bifid appearance of the phalanges, or completely duplicated." [HPO:sdoelken]
+synonym: "Duplication of finger bones" EXACT layperson []
+xref: UMLS:C4021349
+is_a: HP:0004275 ! Duplication of hand bones
+is_a: HP:0005918 ! Abnormality of phalanx of finger
+created_by: doelkens
+creation_date: 2009-05-26T02:28:25Z
+
+[Term]
+id: HP:0005918
+name: Abnormality of phalanx of finger
+alt_id: HP:0005786
+alt_id: HP:0006259
+def: "Abnormalities affecting the phalanx of finger." [HPO:probinson]
+comment: This category is a supercategory for abnormalties affect phalanges of the hand.
+synonym: "Abnormal form of phalanges of the hand" EXACT []
+synonym: "Abnormality of the finger bones" EXACT layperson [ORCID:0000-0001-5208-3432]
+synonym: "Abnormality of the phalanges" EXACT []
+synonym: "Abnormality of the phalanges of the hand" EXACT []
+xref: UMLS:C4021614
+is_a: HP:0001167 ! Abnormality of finger
+created_by: peter
+creation_date: 2008-03-27T02:19:00Z
+
+[Term]
+id: HP:0001167
+name: Abnormality of finger
+alt_id: HP:0003035
+def: "An anomaly of a finger." [HPO:probinson]
+synonym: "Abnormalities of the fingers" EXACT layperson []
+synonym: "Abnormality of finger" EXACT layperson []
+xref: UMLS:C2674737
+is_a: HP:0001155 ! Abnormality of the hand
+is_a: HP:0011297 ! Abnormality of digit
+
+[Term]
+id: HP:0011297
+name: Abnormality of digit
+def: "A morphological abnormality of a digit, i.e., of a finger or toe." [HPO:probinson]
+subset: hposlim_core
+synonym: "Abnormality of fingers or toes" EXACT layperson []
+synonym: "Digital anomalies" EXACT []
+xref: UMLS:C3550704
+is_a: HP:0002813 ! Abnormality of limb bone morphology
+created_by: peter
+creation_date: 2012-02-11T07:16:22Z
+
+[Term]
+id: HP:0002813
+name: Abnormality of limb bone morphology
+def: "Any abnormality of bones of the arms or legs." [HPO:probinson]
+synonym: "Abnormal shape of limb bone" EXACT layperson [ORCID:0000-0001-5208-3432]
+synonym: "Arm and/or leg bone differences" EXACT layperson []
+synonym: "Limb abnormality" EXACT layperson []
+xref: UMLS:C4082761
+is_a: HP:0011844 ! Abnormal appendicular skeleton morphology
+is_a: HP:0040068 ! Abnormality of limb bone
+
+[Term]
+id: HP:0011844
+name: Abnormal appendicular skeleton morphology
+def: "An abnormality of the appendicular skeletal system, consisting of the of the limbs, shoulder and pelvic girdles." [HPO:probinson]
+xref: UMLS:C4023163
+is_a: HP:0011842 ! Abnormality of skeletal morphology
+created_by: peter
+creation_date: 2012-05-07T08:12:26Z
+
+[Term]
+id: HP:0011842
+name: Abnormality of skeletal morphology
+def: "An abnormality of the form, structure, or size of the skeletal system." [HPO:probinson]
+synonym: "Abnormally shaped skeletal" EXACT layperson [ORCID:0000-0001-5208-3432]
+xref: UMLS:C4023165
+is_a: HP:0000924 ! Abnormality of the skeletal system
+created_by: peter
+creation_date: 2012-05-07T08:08:37Z
+
+[Term]
+id: HP:0000924
+name: Abnormality of the skeletal system
+def: "An abnormality of the skeletal system." [HPO:probinson]
+synonym: "Abnormality of the skeletal system" EXACT layperson []
+synonym: "Skeletal abnormalities" EXACT layperson []
+synonym: "Skeletal anomalies" EXACT layperson []
+xref: UMLS:C4021790
+is_a: HP:0000118 ! Phenotypic abnormality
+
+[Term]
+id: HP:0000118
+name: Phenotypic abnormality
+def: "A phenotypic abnormality." [HPO:probinson]
+comment: This is the root of the phenotypic abnormality subontology of the HPO.
+synonym: "Organ abnormality" EXACT []
+xref: UMLS:C4021819
+is_a: HP:0000001 ! All
+
+[Term]
+id: HP:0000001
+name: All
+comment: Root of all terms in the Human Phenotype Ontology.
+xref: UMLS:C0444868
+

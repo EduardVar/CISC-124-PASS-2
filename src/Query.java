@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -17,35 +18,26 @@ public class Query
 		this.queryId = tokens.nextToken();
 	}
 	
-	public String getFullQuery(Map<String, Term> termDicUp)
+	public String getFullQuery(Map<String, Term> termDic)
 	{	
 		//Set the current term to the one give by query
-		Term current = termDicUp.get(queryId);
+		Term current = termDic.get(queryId);
 			
 		String returnQuery = "[query_answer]";	
-		returnQuery += "\n" + current.getFullTerm();
-
-		String currAlt = current.getFirstAlt();
+		returnQuery += "\n[Term]\n" + current.getContent();
 		
-		while ((termDicUp.get(currAlt).getAltIds()) != null)
+		ArrayList<Term> currentParents = current.getParents();
+		
+		while (currentParents.isEmpty() == false)
 		{
-			current = termDicUp.get(currAlt);
+			current = currentParents.get(0);
 			
-			returnQuery += "\n" + current.getFullTerm();
+			returnQuery += "\n[Term]\n" + current.getContent();
 			
-			currAlt = current.getFirstAlt();
+			currentParents = current.getParents();
 		}
 		
-		returnQuery += "\n" + termDicUp.get(currAlt).getFullTerm();
-		
-		return returnQuery;
-	}
-	
-	public String getMaxPath()
-	{
-		String outString = "";
-		
-		return outString;
+		return returnQuery + "\n";
 	}
 
 	public String getFullQuery()
