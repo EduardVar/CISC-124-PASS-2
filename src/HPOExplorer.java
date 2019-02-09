@@ -10,10 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HPOExplorer
-{
-//	private static Term[] terms = new Term[13941];
-//	private static Query[] queries = new Query[5];
-	
+{	
 	private static ArrayList<Term> terms = new ArrayList<>();
 	private static ArrayList<Query> queries = new ArrayList<>();
 	
@@ -54,10 +51,7 @@ public class HPOExplorer
 					if ((line = br.readLine()) != null)
 					{	
 						if (!hasId)
-						{					
-							addTerm.setId(line);
-							hasId = true;
-						}
+							hasId = addTerm.setId(line);
 						else if (line.contains("is_a:"))
 							addTerm.addNewAltId(line);
 						else if (line.contains("is_obsolete: true"))
@@ -78,9 +72,7 @@ public class HPOExplorer
 							termDic.put(terms.get(i).getId(), terms.get(i));
 						}
 						else
-						{
 							terms.add(new Term());
-						}
 						
 						isDone = true;
 					}
@@ -108,14 +100,10 @@ public class HPOExplorer
 			if (term != null)
 			{
 				for (String altId : term.getAltIds())
-				{
 					parents.add(termDic.get(altId));
-				}
 				
 				for (Term parent : parents)
-				{
 					term.addParent(parent);
-				}
 			}
 		}
 	}
@@ -133,9 +121,7 @@ public class HPOExplorer
 			String line = "";
 			
 			while ((line = br.readLine()) != null)
-			{
 				queries.add(new Query(line));
-			}
 			
 			br.close();
 		}
@@ -147,11 +133,6 @@ public class HPOExplorer
 	}
 	
 	public static void solveMaxPath()
-	{	
-		writeToFile("maxpath.txt", getMaxQuery(findMaxPath()));
-	}
-	
-	public static ArrayList<Term> findMaxPath()
 	{
 		ArrayList<Term> maxPath = new ArrayList<>();
 		
@@ -163,7 +144,7 @@ public class HPOExplorer
 				maxPath = currPath;
 		}
 		
-		return maxPath;
+		writeToFile("maxpath.txt", getMaxQuery(maxPath));
 	}
 	
 	public static ArrayList<Term> maxPathToRoot(Term current)
@@ -204,9 +185,7 @@ public class HPOExplorer
 		String solvedOutput = "";
 		
 		for (int i = 0; i < queries.size(); i++)
-		{
 			solvedOutput += queries.get(i).getFullQuery(termDic);
-		}
 		
 		writeToFile("results.txt", solvedOutput);
 	}
@@ -218,9 +197,7 @@ public class HPOExplorer
 		String returnQuery = "[max_path=" + longest.size() + "]";
 
 		for (Term term : longest)
-		{
 			returnQuery += "\n[Term]\n" + term.getContent();
-		}
 		
 		return returnQuery + "\n";
 	}

@@ -1,5 +1,5 @@
-query: H:0010982
-query: H:0031472
-query: H:0025256
-query: H:0003677
-query: H:0040283
+query: HP:0010982
+query: HP:0031472
+query: HP:0025256
+query: HP:0003677
+query: HP:0040283

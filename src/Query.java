@@ -39,14 +39,4 @@ public class Query
 		
 		return returnQuery + "\n";
 	}
-
-	public String getFullQuery()
-	{
-		return fullQuery;
-	}
-
-	public String getQueryId()
-	{
-		return queryId;
-	}
 }

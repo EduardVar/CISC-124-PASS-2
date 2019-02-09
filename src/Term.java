@@ -4,20 +4,16 @@ import java.util.StringTokenizer;
 public class Term
 {
 	String fullId = "", id = "";
-	
-	ArrayList<String>  fullAlts = new ArrayList<>(); 
-	ArrayList<String> altIds = new ArrayList<>();
-	
 	String content = "";
-	
-	//ADD POINTERS AS ARRAY FOR PARENTS AND CHILDREN!
+ 
+	ArrayList<String> altIds = new ArrayList<>();
 	ArrayList<Term> parents = new ArrayList<>();
 	
 	public Term()
 	{
 	}
 	
-	public void setId(String fullId)
+	public boolean setId(String fullId)
 	{
 		this.fullId = fullId;
 		
@@ -27,11 +23,12 @@ public class Term
 			tokens.nextToken();		
 
 		this.id = tokens.nextToken();
+		
+		return true;
 	}
 	
 	public void addNewAltId(String addFullAltId)
 	{
-		fullAlts.add(addFullAltId);
 		altIds.add(getOnlyId(addFullAltId));
 	}
 	
@@ -45,17 +42,6 @@ public class Term
 		String current = tokens.nextToken();
 		
 		return current.substring(0, current.indexOf(" "));
-	}
-	
-	public String getFullTerm()
-	{
-		String fullTerm = fullId + "\n" + content;
-		
-		if (fullAlts.isEmpty() == false)
-			for (int i = 0; i < fullAlts.size(); i++)
-				fullTerm += (i == 0) ? fullAlts.get(i) : "\n" + fullAlts.get(i);
-		
-		return fullTerm + "\n";
 	}
 	
 	public void addParent(Term parent)
