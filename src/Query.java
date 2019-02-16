@@ -42,20 +42,20 @@ public class Query
 		//Adds term heading and adds content of current term to returnQuery
 		returnQuery += "\n[Term]\n" + current.getContent();
 		
-		//Creates a new list of terms to store the parents of the current term
-		ArrayList<Term> currentParents = current.getParents();
+		//Creates a new list of terms to store the is_a IDs of the current term
+		ArrayList<String> currenAlts = current.getAltIds();
 		
 		//Keeps looping until the current term doesn't have any parents 
-		while (currentParents.isEmpty() == false)
+		while (currenAlts.isEmpty() == false)
 		{
-			//Sets the current term to that of their first parent
-			current = currentParents.get(0);
+			//Sets the current term to that of their first is_a from termDic
+			current = termDic.get(currenAlts.get(0));
 			
 			//Adds on term heading with current terms content to returnQuery
 			returnQuery += "\n[Term]\n" + current.getContent();
 			
-			//Sets currentParents to the current term's parents
-			currentParents = current.getParents();
+			//Sets currentParents to the current term's is_a IDs
+			currenAlts = current.getAltIds();
 		}
 		
 		//Returns complete answer returnQuery and adds newline for formatting

@@ -11,7 +11,6 @@ import java.util.Map;
 
 public class HPOExplorer
 {	
-	private static ArrayList<Term> terms = new ArrayList<>();
 	private static ArrayList<Query> queries = new ArrayList<>();
 	
 	private static Map<String, Term> termDic = new HashMap<>();
@@ -27,7 +26,6 @@ public class HPOExplorer
 			br = new BufferedReader(new FileReader(hpoFile));
 			
 			String line = "";
-			int i = 0;
 			
 			boolean initialRead = false;
 			
@@ -67,45 +65,22 @@ public class HPOExplorer
 						{
 							//Sets content for term and add dictionary reference
 							addTerm.setContent(content);
-							terms.add(addTerm);
 
-							termDic.put(terms.get(i).getId(), terms.get(i));
+							termDic.put(addTerm.getId(), addTerm);
 						}
-						else
-							terms.add(new Term());
 						
 						isDone = true;
 					}
 				}
-				
-				i++;
 			}
 			
 			br.close();
-			buildPointers();
 		}
 		catch (IOException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
-	}
-	
-	public static void buildPointers()
-	{
-		for (Term term : terms)
-		{
-			ArrayList<Term> parents = new ArrayList<>();
-			
-			if (term != null)
-			{
-				for (String altId : term.getAltIds())
-					parents.add(termDic.get(altId));
-				
-				for (Term parent : parents)
-					term.addParent(parent);
-			}
-		}
 	}
 	
 	public static void readInQuerries()
@@ -136,8 +111,8 @@ public class HPOExplorer
 	{
 		ArrayList<Term> maxPath = new ArrayList<>();
 		
-		for (Term term : terms)
-		{		
+		for (Term term : termDic.values())
+		{
 			ArrayList<Term> currPath = maxPathToRoot(term);
 			
 			if (currPath.size() > maxPath.size())
@@ -151,9 +126,9 @@ public class HPOExplorer
 	{
 		ArrayList<Term> maxPathToRoot = new ArrayList<>();
 		
-		for (Term parent : current.getParents())
+		for (String altId : current.getAltIds())
 		{
-			ArrayList<Term> currPath = maxPathToRoot(parent);
+			ArrayList<Term> currPath = maxPathToRoot(termDic.get(altId));
 			
 			if (currPath.size() > maxPathToRoot.size())		
 				maxPathToRoot = currPath;
@@ -208,7 +183,5 @@ public class HPOExplorer
 		readInQuerries();
 		solveQueries();
 		solveMaxPath();
-		
-		//TO DO: CLEAN UP CODE, COMBINE WRITE TO FUNCTION AND READ FUNCTIONS TO SIMPLIFY CODE, MAKE LESS CODE IN MAIN (Put some of the formatting and stuff in TERM)
 	}
 }
