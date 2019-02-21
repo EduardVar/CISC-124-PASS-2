@@ -1,3 +1,12 @@
+/**
+ * Author:	Eduard Varshavsky
+ * NetID:	18ev
+ * Date:	February 15, 2019
+ * Desc:	Main class of the project mean to execute most of the logic for
+ * 			reading, writing, and solving HPO queries and tasks
+ */
+
+//Imports utility and file IO packages to use within class
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,10 +20,16 @@ import java.util.Map;
 
 public class HPOExplorer
 {	
+	//List that stores Query objects and is accessible anywhere in the program
 	private static ArrayList<Query> queries = new ArrayList<>();
 	
+	//Hash Map with String keys corresponding to Term values, used to store
+	//Term objects with the key being their ID
 	private static Map<String, Term> termDic = new HashMap<>();
 	
+	/**
+	 * 
+	 */
 	public static void readInHPO()
 	{
 		File hpoFile = new File("HPO.txt");
@@ -169,7 +184,7 @@ public class HPOExplorer
 	//Write to maxPath file here
 	public static String getMaxQuery(ArrayList<Term> longest)
 	{
-		String returnQuery = "[max_path=" + longest.size() + "]";
+		String returnQuery = "[max_path=" + (longest.size() - 1) + "]";
 
 		for (Term term : longest)
 			returnQuery += "\n[Term]\n" + term.getContent();

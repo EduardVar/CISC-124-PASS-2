@@ -1,4 +1,4 @@
-[max_path=16]
+[max_path=15]
 [Term]
 id: HP:0011049
 name: Agenesis of primary maxillary lateral incisor

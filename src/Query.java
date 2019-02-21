@@ -1,12 +1,25 @@
+/**
+ * Author:	Eduard Varshavsky
+ * NetID:	18ev
+ * Date:	February 19, 2019
+ * Desc:	Class meant to store query details and query functionality to find
+ * 			the answer to a query
+ */
+
+//Imports utility packages to use within class
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.StringTokenizer;
 
 public class Query
 {
+	// *** CLASS VARIABLES ***
+	
 	//Stores the query ID number inside a String.
 	String queryId;
 
+	// *** CONSTRUCTOR METHODS ***
+	
 	/**
 	 * Constructor used to create a new Query object. Sets the queryId inside
 	 * @param fullQuery is a String of the entire line of the query
@@ -24,6 +37,8 @@ public class Query
 		//Sets the query ID to the third token in the sequence
 		this.queryId = tokens.nextToken();
 	}
+	
+	// *** OBJECT-BEHAVIOUR METHODS ***
 	
 	/**
 	 * This function gets all the Query information needed to format an answer
@@ -61,4 +76,8 @@ public class Query
 		//Returns complete answer returnQuery and adds newline for formatting
 		return returnQuery + "\n";
 	}
+	
+	// *** MUTATOR METHODS ***
+	
+	// *** ACCESSOR METHODS ***
 }
