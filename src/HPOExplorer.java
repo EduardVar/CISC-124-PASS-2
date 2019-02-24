@@ -31,8 +31,9 @@ public class HPOExplorer
 	 * This function is used to read in the data from the HPO file and sort
 	 * into Term object that will be sorted in the termDic HashMap object
 	 * Doesn't have any parameters or return variables
+	 * @throws IOException in case the file isn't found
 	 */
-	public static void readInHPO()
+	public static void readInHPO() throws IOException
 	{
 		//Creates a new File object hpoFile that reads in the HPO.txt text file
 		File hpoFile = new File("HPO.txt");
@@ -40,106 +41,98 @@ public class HPOExplorer
 		//Creates a new BufferedReader object called br
 		BufferedReader br;			
 		
-		//Tries to execute code in this try block
-		try
+		//Attempts to make a new BufferedReader using a FileReader object
+		//instantiating using the hpoFile File object
+		br = new BufferedReader(new FileReader(hpoFile));
+		
+		//Creates a new blank String to store the current line of the file
+		String line = "";
+		
+		//Boolean created to store if initial read to first term happened
+		boolean initialRead = false;
+		
+		//Keeps looping until the current line read is null
+		while (line != null)
 		{
-			//Attempts to make a new BufferedReader using a FileReader object
-			//instantiating using the hpoFile File object
-			br = new BufferedReader(new FileReader(hpoFile));
-			
-			//Creates a new blank String to store the current line of the file
-			String line = "";
-			
-			//Boolean created to store if initial read to first term happened
-			boolean initialRead = false;
-			
-			//Keeps looping until the current line read is null
-			while (line != null)
+			//Keeps looping until initialRead boolean is true
+			while (!initialRead)
 			{
-				//Keeps looping until initialRead boolean is true
-				while (!initialRead)
-				{
-					//Will set line to the next line in the buffered reader
-					line = br.readLine();	
-					
-					//Sets initialRead to if current line has a term heading
-					initialRead = line.equals("[Term]");
-				}
+				//Will set line to the next line in the buffered reader
+				line = br.readLine();	
 				
-				//Creates a new Term object addTerm and a new empty String
-				//called content to store the term's contents 
-				Term addTerm = new Term();
-				String content = "";
-				
-				//Creates boolean isDone to store if term is done being added
-				boolean isDone = false;
-				
-				//Creates boolean valid to store if term is valid to be added
-				boolean valid = true;	
-				
-				//Creates boolean hasId to store if term has had its ID added
-				boolean hasId = false;
-				
-				//Keeps looping until isDone is true (when term is added)
-				while (!isDone)
-				{	
-					//Checks if the line set from reading br is null
-					if ((line = br.readLine()) != null)
-					{	
-						//Checks if addTerm has an id, or a different condition
-						if (!hasId)
-							//Sets addTerm's ID to line and sets hasId to true
-							hasId = addTerm.setId(line);
-						else if (line.contains("is_a:"))
-							//Adds a new is_a ID to addTerm using the line
-							addTerm.addNewAltId(line);
-						else if (line.contains("is_obsolete: true"))
-							//Sets valid to false since the term is obsolete
-							valid = false;
-						
-						//Checks if the line is a term heading or null
-						if (!(line.equals("[Term]")) && line != null)
-							//Adds what's on the line to the content, has a
-							//case to check if there is anything in content
-							content += (content == "") ? line : "\n" + line;
-					}
-					
-					//Checks if the line is null or if it's a term heading
-					if (line == null || line.equals("[Term]"))
-					{
-						//Checks if addTerm is valid based off valid boolean
-						if (valid)
-						{
-							//Sets content for addTerm
-							addTerm.setContent(content);
-
-							//Uses addTerm's String ID as the key and addTerm
-							//as the Term object value
-							termDic.put(addTerm.getId(), addTerm);
-						}
-						
-						//Sets isDone to true to stop looping for addTerm
-						isDone = true;
-					}
-				}
+				//Sets initialRead to if current line has a term heading
+				initialRead = line.equals("[Term]");
 			}
 			
-			//Closes br to avoid any issues with the BufferedReader object
-			br.close();
+			//Creates a new Term object addTerm and a new empty String
+			//called content to store the term's contents 
+			Term addTerm = new Term();
+			String content = "";
+			
+			//Creates boolean isDone to store if term is done being added
+			boolean isDone = false;
+			
+			//Creates boolean valid to store if term is valid to be added
+			boolean valid = true;	
+			
+			//Creates boolean hasId to store if term has had its ID added
+			boolean hasId = false;
+			
+			//Keeps looping until isDone is true (when term is added)
+			while (!isDone)
+			{	
+				//Checks if the line set from reading br is null
+				if ((line = br.readLine()) != null)
+				{	
+					//Checks if addTerm has an id, or a different condition
+					if (!hasId)
+						//Sets addTerm's ID to line and sets hasId to true
+						hasId = addTerm.setId(line);
+					else if (line.contains("is_a:"))
+						//Adds a new is_a ID to addTerm using the line
+						addTerm.addNewAltId(line);
+					else if (line.contains("is_obsolete: true"))
+						//Sets valid to false since the term is obsolete
+						valid = false;
+					
+					//Checks if the line is a term heading or null
+					if (!(line.equals("[Term]")) && line != null)
+						//Adds what's on the line to the content, has a
+						//case to check if there is anything in content
+						content += (content == "") ? line : "\n" + line;
+				}
+				
+				//Checks if the line is null or if it's a term heading
+				if (line == null || line.equals("[Term]"))
+				{
+					//Checks if addTerm is valid based off valid boolean
+					if (valid)
+					{
+						//Sets content for addTerm
+						addTerm.setContent(content);
+
+						//Uses addTerm's String ID as the key and addTerm
+						//as the Term object value
+						termDic.put(addTerm.getId(), addTerm);
+					}
+					
+					//Sets isDone to true to stop looping for addTerm
+					isDone = true;
+				}
+			}
 		}
-		catch (IOException e)
-		{
-			//Prints out the error message for the exception
-			e.printStackTrace();
-		}	
+		
+		//Closes br to avoid any issues with the BufferedReader object
+		br.close();
 	}
 	
 	/**
 	 * This function is used to read in the data from the queries file and sort
 	 * into Query objects that will be sorted in the queries list
 	 * Doesn't have any parameters or return variables
+	 * @throws IOException in case the file isn't found
 	 */
-	public static void readInQuerries()
+	public static void readInQuerries() throws IOException
 	{
 		//Creates a new File object hpoFile that reads in queries.txt text file
 		File queriesFile = new File("queries.txt");
@@ -147,29 +140,20 @@ public class HPOExplorer
 		//Creates a new BufferedReader object called br
 		BufferedReader br;			
 		
-		//Tries to execute code in this try block
-		try
-		{
-			//Attempts to make a new BufferedReader using a FileReader object
-			//instantiating using the hpoFile File object
-			br = new BufferedReader(new FileReader(queriesFile));
-			
-			//Creates a new blank String to store the current line of the file
-			String line = "";
-			
-			//Keeps looping until the current line is null
-			while ((line = br.readLine()) != null)
-				//Adds a new Query object initialized with line to queries list
-				queries.add(new Query(line));
-			
-			//Closes br BufferedReader object to reduce resources being used
-			br.close();
-		}
-		catch (IOException e)
-		{
-			//Prints out the error message for the exception
-			e.printStackTrace();
-		}
+		//Attempts to make a new BufferedReader using a FileReader object
+		//instantiating using the hpoFile File object
+		br = new BufferedReader(new FileReader(queriesFile));
+		
+		//Creates a new blank String to store the current line of the file
+		String line = "";
+		
+		//Keeps looping until the current line is null
+		while ((line = br.readLine()) != null)
+			//Adds a new Query object initialized with line to queries list
+			queries.add(new Query(line));
+		
+		//Closes br BufferedReader object to reduce resources being used
+		br.close();
 	}
 	
 	/**
