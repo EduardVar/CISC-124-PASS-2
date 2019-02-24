@@ -175,8 +175,9 @@ public class HPOExplorer
 	/**
 	 * This function is used as the main function to solve for the longest path
 	 * in the HPO file
+	 * @throws IOException in case file wasn't found
 	 */
-	public static void solveMaxPath()
+	public static void solveMaxPath() throws IOException
 	{
 		//Creates a List of Term objects to store the longest path
 		ArrayList<Term> maxPath = new ArrayList<>();
@@ -251,8 +252,9 @@ public class HPOExplorer
 	
 	/**
 	 * This function is used to solve each query and write them to a file
+	 * @throws IOException in case file wasn't found
 	 */
-	public static void solveQueries()
+	public static void solveQueries() throws IOException
 	{
 		//Creates solvedOutput String to store what to write to the file
 		String solvedOutput = "";
@@ -270,12 +272,10 @@ public class HPOExplorer
 	 * This function is a general function to writing to a file
 	 * @param fileName is a String for the name of the file being written to
 	 * @param content is a String for what is to be written to the file
+	 * @throws IOException in case file wasn't found
 	 */
-	public static void writeToFile(String fileName, String content)
+	public static void writeToFile(String fileName, String content) throws IOException
 	{
-		//Attempts to run the code in this block
-		try
-		{
 			//Creates a new FileOutputSteam object using fileName given
 			FileOutputStream outFile = new FileOutputStream(fileName);
 			
@@ -291,19 +291,14 @@ public class HPOExplorer
 			
 			//Closes writer to not use any extra resources
 			writer.close();
-		}
-		catch (IOException e) 
-		{
-			//Prints out the error message for the exception
-			e.printStackTrace();
-		}
 	}
 	
 	/**
 	 * Main function of program used to run functions to complete it's purpose
 	 * @param args is an Array of String objects for any configurations
+	 * @throws IOException in case file wasn't found
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException
 	{
 		//Runs functions to read in data from files
 		readInHPO();
