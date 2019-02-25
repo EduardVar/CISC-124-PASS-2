@@ -37,13 +37,10 @@ public class HPOExplorer
 	{
 		//Creates a new File object hpoFile that reads in the HPO.txt text file
 		File hpoFile = new File("HPO.txt");
-		
-		//Creates a new BufferedReader object called br
-		BufferedReader br;			
-		
+
 		//Attempts to make a new BufferedReader using a FileReader object
 		//instantiating using the hpoFile File object
-		br = new BufferedReader(new FileReader(hpoFile));
+		BufferedReader br = new BufferedReader(new FileReader(hpoFile));
 		
 		//Creates a new blank String to store the current line of the file
 		String line = "";
@@ -136,13 +133,10 @@ public class HPOExplorer
 	{
 		//Creates a new File object hpoFile that reads in queries.txt text file
 		File queriesFile = new File("queries.txt");
-		
-		//Creates a new BufferedReader object called br
-		BufferedReader br;			
-		
+
 		//Attempts to make a new BufferedReader using a FileReader object
 		//instantiating using the hpoFile File object
-		br = new BufferedReader(new FileReader(queriesFile));
+		BufferedReader br = new BufferedReader(new FileReader(queriesFile));
 		
 		//Creates a new blank String to store the current line of the file
 		String line = "";
@@ -258,23 +252,24 @@ public class HPOExplorer
 	 * @param content is a String for what is to be written to the file
 	 * @throws IOException in case file wasn't found
 	 */
-	public static void writeToFile(String fileName, String content) throws IOException
+	public static void writeToFile(String fileName, String content) 
+			throws IOException
 	{
-			//Creates a new FileOutputSteam object using fileName given
-			FileOutputStream outFile = new FileOutputStream(fileName);
-			
-			//Creates a new OutputStreamWriter object in utf-8 using outFile
-			OutputStreamWriter outStream = new OutputStreamWriter(outFile, 
-					"utf-8");
-			
-			//Makes a new BufferedWrite object called writer using outStream
-			BufferedWriter writer = new BufferedWriter(outStream);
-			
-			//Writes to writer with the content given as a parameter
-			writer.write(content);
-			
-			//Closes writer to not use any extra resources
-			writer.close();
+		//Creates a new FileOutputSteam object using fileName given
+		FileOutputStream outFile = new FileOutputStream(fileName);
+		
+		//Creates a new OutputStreamWriter object in utf-8 using outFile
+		OutputStreamWriter outStream = new OutputStreamWriter(outFile, 
+				"utf-8");
+		
+		//Makes a new BufferedWrite object called writer using outStream
+		BufferedWriter writer = new BufferedWriter(outStream);
+		
+		//Writes to writer with the content given as a parameter
+		writer.write(content);
+		
+		//Closes writer to not use any extra resources
+		writer.close();
 	}
 	
 	/**
