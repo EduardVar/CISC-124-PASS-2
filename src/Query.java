@@ -1,6 +1,5 @@
 /**
  * Author:	Eduard Varshavsky
- * NetID:	18ev
  * Date:	February 19, 2019
  * Desc:	Class meant to store query details and query functionality to find
  * 			the answer to a query

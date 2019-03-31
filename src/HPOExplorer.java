@@ -1,6 +1,5 @@
 /**
  * Author:	Eduard Varshavsky
- * NetID:	18ev
  * Date:	February 15, 2019
  * Desc:	Main class of the project mean to execute most of the logic for
  * 			reading, writing, and solving HPO queries and tasks

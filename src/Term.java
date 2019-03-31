@@ -1,6 +1,5 @@
 /**
  * Author:	Eduard Varshavsky
- * NetID:	18ev
  * Date:	February 15, 2019
  * Desc:	Class meant to store term attribute and term functionality to set
  * 			and return term attributes
